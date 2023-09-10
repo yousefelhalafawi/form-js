@@ -1,5 +1,5 @@
 {
-  "name": "fedis_form_builder",
+  "name": "fedis_form_js",
   "scripts": {
     "all": "run-s lint build lint:types test test:distro",
     "build": "lerna run build --sort --stream",
@@ -123,7 +123,7 @@
     "url": "https://github.com/bpmn-io/form-js/issues"
   },
   "homepage": "https://github.com/bpmn-io/form-js#readme",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "main": "playwright.config.js",
   "directories": {
     "doc": "docs"
@@ -818,8 +818,7 @@
     "stop-iteration-iterator": "^1.0.0",
     "streamroller": "^3.1.5",
     "streamx": "^2.15.1",
-    "string-width": "^4.2.2",
-    "string-width-cjs": "^4.2.3",
+    "string-width": "^4.2.3",
     "string.prototype.matchall": "^4.0.9",
     "string.prototype.padend": "^3.1.5",
     "string.prototype.trim": "^1.2.8",
