@@ -2,7 +2,6 @@ import CalendarIcon from '../icons/Calendar.svg';
 import flatpickr from 'flatpickr';
 
 import { ENTER_KEYDOWN_EVENT, focusRelevantFlatpickerDay } from '../../util/dateTimeUtil';
-import { getLocaleReadableDateFormat, getLocaleDateFlatpickrConfig } from '../../util/localisationUtil';
 import { useCallback, useEffect, useRef, useState } from 'preact/hooks';
 import { prefixId } from '../../Util';
 import InputAdorner from './InputAdorner';
@@ -26,9 +25,9 @@ export default function Datepicker(props) {
 
   const dateInputRef = useRef();
   const focusScopeRef = useRef();
-
   const [ flatpickrInstance, setFlatpickrInstance ] = useState(null);
   const [ isInputDirty, setIsInputDirty ] = useState(false);
+
   const [ forceFocusCalendar, setForceFocusCalendar ] = useState(false);
 
   // shorts the date value back to the source
@@ -55,7 +54,7 @@ export default function Datepicker(props) {
 
     let config = {
       allowInput: true,
-      dateFormat: getLocaleDateFlatpickrConfig(),
+      dateFormat: 'm/d/Y',
       static: true,
       clickOpens: false,
 
@@ -180,7 +179,7 @@ export default function Datepicker(props) {
           class="fjs-input"
           disabled={ disabled }
           readOnly={ readonly }
-          placeholder={ getLocaleReadableDateFormat() }
+          placeholder="mm/dd/yyyy"
           autoComplete="off"
           onFocus={ onInputFocus }
           onKeyDown={ onInputKeyDown }

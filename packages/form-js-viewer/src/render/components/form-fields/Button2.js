@@ -9,7 +9,12 @@ export default function Button(props) {
 
   return (
     <div class={formFieldClasses(type)}>
-      <button class="fjs-button" type={action} disabled={disabled}>
+      <button
+        class="fjs-button"
+        style="background:red;color:white"
+        type={action}
+        disabled={disabled}
+      >
         {field.label}
       </button>
     </div>

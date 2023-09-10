@@ -1,3 +1,4 @@
+import { isArray, isObject } from 'min-dash';
 import { useContext } from 'preact/hooks';
 
 import { FormContext } from '../../context';
@@ -5,74 +6,90 @@ import { FormContext } from '../../context';
 import Description from '../Description';
 import Errors from '../Errors';
 import Label from '../Label';
+import InputAdorner from './parts/TemplatedInputAdorner';
 
 import {
   formFieldClasses,
   prefixId
 } from '../Util';
-import classNames from 'classnames';
 
-const type = 'checkbox';
+const type = 'passwordfield';
 
 
-export default function Checkbox(props) {
+export default function Passwordfield(props) {
   const {
     disabled,
     errors = [],
     onBlur,
     field,
     readonly,
-    value = false
+    value = ''
   } = props;
 
   const {
     description,
     id,
     label,
+    appearance = {},
     validate = {}
   } = field;
+
+  const {
+    prefixAdorner,
+    suffixAdorner
+  } = appearance;
 
   const { required } = validate;
 
   const onChange = ({ target }) => {
     props.onChange({
       field,
-      value: target.checked
+      value: target.value
     });
   };
 
   const { formId } = useContext(FormContext);
   const errorMessageId = errors.length === 0 ? undefined : `${prefixId(id, formId)}-error-message`;
 
-  return <div class={ classNames(formFieldClasses(type, { errors, disabled, readonly }), { 'fjs-checked': value }) }>
+  return <div class={ formFieldClasses(type, { errors, disabled, readonly }) }>
     <Label
       id={ prefixId(id, formId) }
       label={ label }
-      required={ required }>
+      required={ required } />
+    <InputAdorner disabled={ disabled } readonly={ readonly } pre={ prefixAdorner } post={ suffixAdorner }>
       <input
-        checked={ value }
         class="fjs-input"
         disabled={ disabled }
         readOnly={ readonly }
         id={ prefixId(id, formId) }
-        type="checkbox"
-        onChange={ onChange }
+        onInput={ onChange }
         onBlur={ onBlur }
+        type="password"
+        value={ value }
         aria-describedby={ errorMessageId } />
-    </Label>
+    </InputAdorner>
     <Description description={ description } />
     <Errors errors={ errors } id={ errorMessageId } />
   </div>;
 }
 
-Checkbox.config = {
+Passwordfield.config = {
   type,
   keyed: true,
-  label: 'Checkbox',
-  group: 'selection',
-  emptyValue: false,
-  sanitizeValue: ({ value }) => value === true,
-  create: (options = {}) => ({
-    ...options
-  })
+  label: 'Password field',
+  group: 'basic-input',
+  emptyValue: '',
+  sanitizeValue: ({ value }) => {
+    if (isArray(value) || isObject(value)) {
+      return '';
+    }
+
+    // sanitize newlines to spaces
+    if (typeof value === 'string') {
+      return value.replace(/[\r\n\t]/g, ' ');
+    }
+
+    return String(value);
+  },
+  create: (options = {}) => ({ ...options })
 };

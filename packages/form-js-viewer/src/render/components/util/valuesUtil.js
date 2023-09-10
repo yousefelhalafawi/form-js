@@ -47,23 +47,3 @@ function _isReadableType(value) {
 function _isValueSomething(value) {
   return value || value === 0 || value === false;
 }
-
-export function createEmptyOptions(options = {}) {
-
-  const defaults = {};
-
-  // provide default values if valuesKey and valuesExpression are not set
-  if (!options.valuesKey && !options.valuesExpression) {
-    defaults.values = [
-      {
-        label: 'Value',
-        value: 'value'
-      }
-    ];
-  }
-
-  return {
-    ...defaults,
-    ...options
-  };
-}

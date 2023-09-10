@@ -13,9 +13,6 @@ import Errors from '../Errors';
 import Label from '../Label';
 
 import { sanitizeMultiSelectValue } from '../util/sanitizerUtil';
-
-import { createEmptyOptions } from '../util/valuesUtil';
-
 import {
   formFieldClasses,
   prefixId
@@ -216,5 +213,23 @@ Taglist.config = {
   group: 'selection',
   emptyValue: [],
   sanitizeValue: sanitizeMultiSelectValue,
-  create: createEmptyOptions
+  create: (options = {}) => {
+
+    const defaults = {};
+
+    // provide default values if valuesKey isn't set
+    if (!options.valuesKey) {
+      defaults.values = [
+        {
+          label: 'Value',
+          value: 'value'
+        }
+      ];
+    }
+
+    return {
+      ...defaults,
+      ...options
+    };
+  }
 };

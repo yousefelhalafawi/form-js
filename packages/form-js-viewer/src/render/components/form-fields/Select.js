@@ -7,9 +7,6 @@ import Errors from '../Errors';
 import Label from '../Label';
 
 import { sanitizeSingleSelectValue } from '../util/sanitizerUtil';
-
-import { createEmptyOptions } from '../util/valuesUtil';
-
 import {
   formFieldClasses,
   prefixId
@@ -83,5 +80,23 @@ Select.config = {
   group: 'selection',
   emptyValue: null,
   sanitizeValue: sanitizeSingleSelectValue,
-  create: createEmptyOptions
+  create: (options = {}) => {
+
+    const defaults = {};
+
+    // provide default values if valuesKey isn't set
+    if (!options.valuesKey) {
+      defaults.values = [
+        {
+          label: 'Value',
+          value: 'value'
+        }
+      ];
+    }
+
+    return {
+      ...defaults,
+      ...options
+    };
+  }
 };
