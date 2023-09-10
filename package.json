@@ -1,5 +1,6 @@
 {
   "name": "form-js",
+"version": "0.1.0",
   "scripts": {
     "all": "run-s lint build lint:types test test:distro",
     "build": "lerna run build --sort --stream",
